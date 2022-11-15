@@ -2,9 +2,12 @@
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+   <TodoCounter/>
+   <TodoSearch />
+   <TodoList>
+     <TodoItem />
+   <TodoList/>
+   <CreateTodoButton />
   );
 }
 
