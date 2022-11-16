@@ -7,7 +7,7 @@ import { CreateTodoButtom } from "./components/CreateTodoButtom/CreateTodoButtom
 //import './App.css';
 
 const todos= [
-  {text: "Repasar React", completed: false},
+  {text: "Repasar React", completed: true},
   {text: "Completar Cursos", completed: false},
   {text: "Estudiar ingles", completed: false}
 ]
