@@ -1,34 +1,59 @@
 import React from "react";
-import { TodoCounter } from "./components/TodoCounter/TodoCounter";
-import { TodoSearch } from "./components/TodoSearch/TodoSearch";
-import { TodoList } from "./components/TodoList/TodoList";
-import { TodoItem } from "./components/TodoItem/TodoItem";
-import { CreateTodoButtom } from "./components/CreateTodoButtom/CreateTodoButtom";
+import { useState } from 'react'
+import { AppUI } from "./AppUI";
 //import './App.css';
 
-const todos= [
+const defaultTodos= [
   {text: "Repasar React", completed: true},
-  {text: "Completar Cursos", completed: false},
-  {text: "Estudiar ingles", completed: false}
+  {text: "Completar Cursos", completed: true},
+  {text: "Estudiar ingles", completed: false},
+  {text: "Estudiar en Plaztzi", completed: true}
 ]
 
 function App() {
-  return (
-  <React.Fragment>
-    <TodoCounter />
-    <TodoSearch />
+// !Here we create a state for the search value and we pass it to the TodoSearch component
+  const [todos, setTodos] = useState(defaultTodos);
+  const [searchValue, setSearchValue] = useState('');
 
-    <TodoList>
-      {todos.map(todo => (
-        <TodoItem 
-          key={todo.text} 
-          text={todo.text}
-          completed={todo.completed} 
-        />
-      ))}
-    </TodoList>
-    <CreateTodoButtom /> 
-  </React.Fragment>
+  const completedTodos = todos.filter(todo => !!todo.completed).length;
+  const totalTodos = todos.length;
+
+  let searchedTodos = [];
+
+  if(!searchValue.length >= 1){
+    searchedTodos = todos;
+  } else {
+    searchedTodos = todos.filter(todo =>  {
+      const todotext= todo.text.toLowerCase();
+      const searchText = searchValue.toLowerCase();
+      return todotext.includes(searchText)
+    });
+  }
+
+  const completeTodo = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text);
+    const newTodos = [...todos];
+    newTodos[todoIndex].completed= true;
+    setTodos(newTodos);
+  }
+
+  const deleteTodo = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text);
+    const newTodos = [...todos];
+    newTodos.splice(todoIndex, 1);
+    setTodos(newTodos);
+  }
+
+  return (
+    <AppUI
+      totalTodos={totalTodos}
+      completedTodos={completedTodos}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+      searchedTodos={searchedTodos}
+      completeTodo={completeTodo}
+      deleteTodo={deleteTodo}
+      />
   )
 }
 
