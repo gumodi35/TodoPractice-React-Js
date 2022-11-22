@@ -1,12 +1,13 @@
+import React from 'react'
 import { TodoCounter } from "./components/TodoCounter/TodoCounter";
 import { TodoSearch } from "./components/TodoSearch/TodoSearch";
 import { TodoList } from "./components/TodoList/TodoList";
 import { TodoItem } from "./components/TodoItem/TodoItem";
 import { CreateTodoButtom } from "./components/CreateTodoButtom/CreateTodoButtom";
 
-import React from 'react'
-
 const AppUI = ({ 
+    error,
+    loading,
     totalTodos,
     completedTodos,
     searchValue,
@@ -24,10 +25,14 @@ const AppUI = ({
     <TodoSearch
       searchValue={searchValue}
       setSearchValue={setSearchValue}
-    
     />
 
     <TodoList>
+        {error && <p>Algo fallo, vuelve intentar por favor!...</p>}
+        {loading && <p>Cargando, espera por favor!...</p>}
+        {(!loading && !searchedTodos.length) && <p>!Crea tu primer TODO¡</p>}
+       
+
       {searchedTodos.map(todo => (
         <TodoItem 
           key={todo.text} 
@@ -38,6 +43,7 @@ const AppUI = ({
         />
       ))}
     </TodoList>
+    
     <CreateTodoButtom /> 
   </React.Fragment>
   );
