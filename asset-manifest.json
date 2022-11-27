@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/TodoPractice-React-Js/static/css/main.7cc66b18.css",
+    "main.js": "/TodoPractice-React-Js/static/js/main.c7c86dae.js",
+    "static/media/deleteIcon.svg": "/TodoPractice-React-Js/static/media/deleteIcon.f8fb33058c82e8aa1d0be3dce908001b.svg",
+    "static/media/checkIcon.svg": "/TodoPractice-React-Js/static/media/checkIcon.a60560c6d5f7fd7a9ba6287b9c655f6f.svg",
+    "index.html": "/TodoPractice-React-Js/index.html",
+    "main.7cc66b18.css.map": "/TodoPractice-React-Js/static/css/main.7cc66b18.css.map",
+    "main.c7c86dae.js.map": "/TodoPractice-React-Js/static/js/main.c7c86dae.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7cc66b18.css",
+    "static/js/main.c7c86dae.js"
+  ]
+}
