@@ -1,5 +1,5 @@
 
-function TodoHeader({ children}) {
+function TodoHeader({ children }) {
     return(
         <header>
             { children }
