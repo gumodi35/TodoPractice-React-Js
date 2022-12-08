@@ -31,15 +31,17 @@ function App() {
 
   return (
     <React.Fragment>
-      <TodoHeader>
+      <TodoHeader loading={loading}>
         <TodoCounter
           totalTodos={totalTodos}
           completedTodos={completedTodos}
+          
         />
-        <TodoSearch
+         <TodoSearch
           searchValue={searchValue}
           setSearchValue={setSearchValue}
-        />
+  
+        /> 
       </TodoHeader>
 
       <TodoList
@@ -53,7 +55,17 @@ function App() {
         onEmptyTodos={() => <EmptyTodos />}
         onEmptySearchResults={
           (searchText) => <p> No encontramos resultados para {searchText}</p>}
-        render={todo => (
+         render={todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
+        )} 
+      />
+      {/*   {todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -62,7 +74,7 @@ function App() {
             onDelete={() => deleteTodo(todo.text)}
           />
         )}
-      />
+      </TodoList> */}
 
       {!!openModal && (
         <Modal>
