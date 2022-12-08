@@ -32,15 +32,24 @@ function App() {
   return (
     <React.Fragment>
       <TodoHeader>
-        <TodoCounter totalTodos={totalTodos} completedTodos={completedTodos} />
-        <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
+        <TodoCounter
+          totalTodos={totalTodos}
+          completedTodos={completedTodos}
+        />
+        <TodoSearch
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
       </TodoHeader>
-      <TodoList>
-        {error && <TodosError error={error} />}
-        {loading && <TodosLoading />}
-        {!loading && !searchedTodos.length && <EmptyTodos />}
 
-        {searchedTodos.map((todo) => (
+      <TodoList
+        error={error}
+        loading={loading}
+        searchedTodos={searchedTodos}
+        onError={() => <TodosError />}
+        onLoading={() => <TodosLoading />}
+        onEmptyTodos={() => <EmptyTodos />}
+        render={todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -48,17 +57,21 @@ function App() {
             onComplete={() => completeTodo(todo.text)}
             onDelete={() => deleteTodo(todo.text)}
           />
-        ))}
-      </TodoList>
+        )}
+      />
+
       {!!openModal && (
         <Modal>
-          <TodoForm 
-          addTodo={addTodo}
-          setOpenModal={setOpenModal}
+          <TodoForm
+            addTodo={addTodo}
+            setOpenModal={setOpenModal}
           />
         </Modal>
       )}
-      <CreateTodoButton setOpenModal={setOpenModal} />
+
+      <CreateTodoButton
+        setOpenModal={setOpenModal}
+      />
     </React.Fragment>
   );
 }
