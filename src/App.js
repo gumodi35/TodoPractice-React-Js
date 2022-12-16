@@ -8,10 +8,10 @@ import { TodoForm } from "./components/TodoForm/TodoForm";
 import { CreateTodoButton } from "./components/CreateTodoButtom/CreateTodoButtom";
 import { Modal } from "./components/Modal/Modal";
 import { TodosLoading } from "./components/TodosLoading/TodosLoading";
-
 import { EmptyTodos } from "./components/EmptyTodos/EmptyTodos";
 import { TodosError } from "./components/TodosError/TodosError";
 import { TodoHeader } from "./components/TodoHeader/TodoHeader";
+import { ChangeAlertWithStorageListener } from "./components/ChangeAlert/ChangeAlert";
 
 function App() {
   const {
@@ -27,10 +27,11 @@ function App() {
     setSearchValue,
     addTodo,
     setOpenModal,
+    sincronizeTodos,
   } = useTodos();
 
   return (
-    <React.Fragment>
+    <>
       <TodoHeader loading={loading}>
         <TodoCounter
           totalTodos={totalTodos}
@@ -47,25 +48,17 @@ function App() {
       <TodoList
         error={error}
         loading={loading}
+        totalTodos={totalTodos}
         searchedTodos={searchedTodos}
         searchText={searchValue}
-        totalTodos={totalTodos}
         onError={() => <TodosError />}
         onLoading={() => <TodosLoading />}
         onEmptyTodos={() => <EmptyTodos />}
         onEmptySearchResults={
-          (searchText) => <p> No encontramos resultados para {searchText}</p>}
-         render={todo => (
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={() => completeTodo(todo.text)}
-            onDelete={() => deleteTodo(todo.text)}
-          />
-        )} 
-      />
-      {/*   {todo => (
+          (searchText) => <p>No hay resultados para {searchText}</p>
+        }
+      >
+        {todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -74,7 +67,7 @@ function App() {
             onDelete={() => deleteTodo(todo.text)}
           />
         )}
-      </TodoList> */}
+      </TodoList>
 
       {!!openModal && (
         <Modal>
@@ -88,7 +81,12 @@ function App() {
       <CreateTodoButton
         setOpenModal={setOpenModal}
       />
-    </React.Fragment>
+
+      <ChangeAlertWithStorageListener 
+        sincronize = {sincronizeTodos}
+      />
+
+    </>
   );
 }
 

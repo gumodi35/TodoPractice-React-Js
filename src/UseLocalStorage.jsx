@@ -1,16 +1,17 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
 function useLocalStorage(itemName, initialValue) {
-  const [error, setError] = React.useState(false);
-  const [loading, setLoading] = React.useState(true);
-  const [item, setItem] = React.useState(initialValue);
+  const [sincronizedItem, setSincronizedItem] = useState(true);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState(initialValue);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       try {
         const localStorageItem = localStorage.getItem(itemName);
         let parsedItem;
-
+        
         if (!localStorageItem) {
           localStorage.setItem(itemName, JSON.stringify(initialValue));
           parsedItem = initialValue;
@@ -20,26 +21,35 @@ function useLocalStorage(itemName, initialValue) {
 
         setItem(parsedItem);
         setLoading(false);
-      } catch (error) {
+        setSincronizedItem(true);
+      } catch(error) {
         setError(error);
       }
     }, 3000);
-  });
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sincronizedItem]);
+  
   const saveItem = (newItem) => {
     try {
       const stringifiedItem = JSON.stringify(newItem);
       localStorage.setItem(itemName, stringifiedItem);
       setItem(newItem);
-    } catch (error) {
+    } catch(error) {
       setError(error);
     }
   };
+
+  const sincronizeItem = () => {
+    setLoading(true);
+    setSincronizedItem(false);
+  };
+
   return {
     item,
     saveItem,
     loading,
     error,
+    sincronizeItem,
   };
 }
 
